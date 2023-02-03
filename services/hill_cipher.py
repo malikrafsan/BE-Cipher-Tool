@@ -48,9 +48,13 @@ class HillCipher:
 
 	def decrypt(self, cipher_text):
 		size = self.size
+  
+		# add padding if len of plaintext is not multiple of size
+		if len(cipher_text) % size != 0:
+			cipher_text += "X" * (size - (len(cipher_text) % size))
+  
 		plain_text = ""
 		for i in range(0, len(cipher_text), size):
 			clip_cipher_text = cipher_text[i:i + size]
 			plain_text += self.decrypt_per_size(clip_cipher_text)
-			print(plain_text)
 		return plain_text
