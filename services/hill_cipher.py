@@ -5,8 +5,7 @@ class HillCipher:
 	def __init__(self, key_matrix):
 		self.size = len(key_matrix)
 		self.key_matrix = sym.Matrix(key_matrix)
-		self.key_inverse = self.key_matrix.inv_mod(26)
-		self.__mod = 97
+		self.__mod = 65
   
 	def convert_str_to_list(self, str):
 		return [ord(i) - self.__mod for i in str]
@@ -25,7 +24,7 @@ class HillCipher:
 		cipher_text = ""
   
 		plain_text = plain_text.replace(" ", "")
-		plain_text = plain_text.lower() # TODO: CHECK LATER
+		plain_text = plain_text.upper() # TODO: CHECK LATER
   
 		# add padding if len of plaintext is not multiple of size
 		if len(plain_text) % size != 0:
@@ -38,9 +37,11 @@ class HillCipher:
 		return cipher_text
 
 	def decrypt_per_size(self, clip_cipher_text):
+		key_inverse = self.key_matrix.inv_mod(26)
+   
 		arr = [self.convert_str_to_list(clip_cipher_text)]
 		symArr = sym.Matrix(arr)
-		res = self.key_inverse * symArr.T
+		res = key_inverse * symArr.T
 		res = res % 26
 		res = res.T
 		return "".join([chr(i + self.__mod) for i in res])
