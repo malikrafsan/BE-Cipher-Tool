@@ -28,7 +28,7 @@ class HillCipher:
   
 		# add padding if len of plaintext is not multiple of size
 		if len(plain_text) % size != 0:
-			plain_text += "x" * (size - (len(plain_text) % size))
+			plain_text += "X" * (size - (len(plain_text) % size))
   
 		for i in range(0, len(plain_text), size):
 			clip_plain_text = plain_text[i:i + size]
